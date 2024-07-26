@@ -159,10 +159,14 @@
       }
     },
     "FFL1": {
-      "name": ["ROVE FFL1", "DWT FFL1"],
-      "type": ["ctrl", "btn"],
-      "ruta": ["rove/fritas_L1", ""],
-      "nivel": [1, 1],
+      "name": ["TONELADAS L1", "ROVE FFL1", "DWT FFL1"],
+      "type": ["ctrl", "ctrl", "btn"],
+      "ruta": [
+        "control_N=231&control_T=TONELADAS%20FRITAS%20L1&nr=0",
+        "rove/fritas_L1",
+        ""
+      ],
+      "nivel": [1, 1, 1],
       "DWT FFL1": {
         "name": ["DWT PLANEADO FFL1", "DWT NO PLANEADO FFL1"],
         "type": ["ctrl", "btn"],
@@ -240,10 +244,14 @@
       }
     },
     "FFL2": {
-      "name": ["ROVE FFL2", "DWT FFL2"],
-      "type": ["ctrl", "btn"],
-      "ruta": ["rove/fritas_L2", ""],
-      "nivel": [1, 1],
+      "name": ["TONELADAS L2", "ROVE FFL2", "DWT FFL2"],
+      "type": ["ctrl", "ctrl", "btn"],
+      "ruta": [
+        "control_N=193&control_T=TONELADAS%20FRITAS%20L2&nr=0",
+        "rove/fritas_L2",
+        ""
+      ],
+      "nivel": [1, 1, 1],
       "DWT FFL2": {
         "name": ["DWT PLANEADO FFL2", "DWT NO PLANEADO FFL2"],
         "type": ["ctrl", "btn"],
@@ -329,10 +337,14 @@
       }
     },
     "Puré": {
-      "name": ["ROVE PURÉ", "DWT PURÉ"],
-      "type": ["ctrl", "btn"],
-      "ruta": ["rove/pure", ""],
-      "nivel": [1, 1],
+      "name": ["TONELADAS PURÉ", "ROVE PURÉ", "DWT PURÉ"],
+      "type": ["ctrl", "ctrl", "btn"],
+      "ruta": [
+        "control_N=295&control_T=TONELADAS%20PURÉ&nr=0",
+        "rove/pure",
+        ""
+      ],
+      "nivel": [1, 1, 1],
       "DWT PURÉ": {
         "name": ["DWT PLANEADO PURÉ", "DWT NO PLANEADO PURÉ"],
         "type": ["ctrl", "btn"],

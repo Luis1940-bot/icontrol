@@ -230,7 +230,7 @@ const funcionDeClick = (e) => {
 function alertar(men) {
   const miAlerta = new Alerta()
   const mensaje = trO(arrayGlobal.mensajesVarios.json[men])
-  arrayGlobal.avisoRojo.close.display = 'none'
+  // arrayGlobal.avisoRojo.close.display = 'none'
   miAlerta.createVerde(arrayGlobal.avisoRojo, mensaje, objTranslate)
   const modal = document.getElementById('modalAlertVerde')
   modal.style.display = 'block'
@@ -239,6 +239,7 @@ function alertar(men) {
 function leeApp(json) {
   readJSON(json)
     .then((data) => {
+      console.log(appJSON, data)
       Object.assign(appJSON, data)
       navegador.estadoAnteriorButton = 'apps'
       navegador.estadoAnteriorWhereUs.push('apps')
@@ -260,6 +261,10 @@ function leeApp(json) {
         alertar('no_carga')
         // Aquí puedes manejar otros tipos de errores
       }
+      setTimeout(() => {
+        const url = `https://factumconsultora.com/mccain`
+        window.location.href = url
+      }, 8000)
     })
 }
 

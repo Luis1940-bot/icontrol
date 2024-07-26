@@ -77,13 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
   spinner.style.visibility = 'visible'
   limpiezaDeCache()
   const email = document.getElementById('email')
-  console.log(email.value)
+  // console.log(email.value)
   // session()
   setTimeout(() => {
     // window.location.href = `${SERVER}/Pages/Home/`
     // window.location.href = `${SERVER}/Pages/Login/`
     // console.log(`${SERVER}/Pages/Router/rutas.php?ruta=login`)
-    window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=login`
-    // window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=home`
+    window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=login` //! en localhost va login
+    // window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=home` //! en el hosting va home
   }, 1000)
 })
