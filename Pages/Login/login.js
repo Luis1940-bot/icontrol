@@ -79,20 +79,62 @@ function leeVersion(json) {
     })
 }
 
+// function leeApp(json) {
+//   readJSON(json)
+//     .then((data) => {
+//       Object.assign(appJSON, data)
+//       // console.log(data)
+//       const idiomaPreferido = navigator.language || navigator.languages[0]
+//       const partesIdioma = idiomaPreferido.split('-')
+//       const idioma = partesIdioma[0]
+//       const { developer, content, by, rutaDeveloper, logo } = data
+//       const metaDescription = document.querySelector('meta[name="description"]')
+//       metaDescription.setAttribute('content', content)
+//       const faviconLink = document.querySelector('link[rel="shortcut icon"]')
+//       faviconLink.href = `${SERVER}/assets/img/favicon.ico`
+//       document.title = developer
+//       const logoi = document.getElementById('logo_factum')
+//       const srcValue = `${SERVER}/assets/img/${logo}.png`
+//       const altValue = 'Tenki Web'
+//       logoi.src = srcValue
+//       logoi.alt = altValue
+//       logoi.width = 100
+//       logoi.height = 40
+//       const footer = document.getElementById('footer')
+//       footer.innerText = by
+//       footer.href = rutaDeveloper
+//       // document.querySelector('.header-McCain').style.display = 'none'
+//       configPHP(data, idioma)
+//       setTimeout(() => {
+//         const select = document.querySelector('.select-login')
+//         if (select) {
+//           select.focus()
+//         }
+//       }, 100)
+//     })
+//     .catch((error) => {
+//       console.error('Error al cargar el archivo:', error)
+//     })
+// }
+
 function leeApp(json) {
   readJSON(json)
     .then((data) => {
       Object.assign(appJSON, data)
-      // console.log(data)
+
       const idiomaPreferido = navigator.language || navigator.languages[0]
       const partesIdioma = idiomaPreferido.split('-')
       const idioma = partesIdioma[0]
       const { developer, content, by, rutaDeveloper, logo } = data
+
       const metaDescription = document.querySelector('meta[name="description"]')
       metaDescription.setAttribute('content', content)
+
       const faviconLink = document.querySelector('link[rel="shortcut icon"]')
       faviconLink.href = `${SERVER}/assets/img/favicon.ico`
+
       document.title = developer
+
       const logoi = document.getElementById('logo_factum')
       const srcValue = `${SERVER}/assets/img/${logo}.png`
       const altValue = 'Tenki Web'
@@ -100,17 +142,23 @@ function leeApp(json) {
       logoi.alt = altValue
       logoi.width = 100
       logoi.height = 40
+
       const footer = document.getElementById('footer')
       footer.innerText = by
       footer.href = rutaDeveloper
-      // document.querySelector('.header-McCain').style.display = 'none'
+
       configPHP(data, idioma)
-      setTimeout(() => {
+
+      function focusSelect() {
         const select = document.querySelector('.select-login')
         if (select) {
           select.focus()
+        } else {
+          requestAnimationFrame(focusSelect) // Sigue intentando hasta que el elemento esté disponible
         }
-      }, 100)
+      }
+
+      requestAnimationFrame(focusSelect) // Inicia el bucle de verificación
     })
     .catch((error) => {
       console.error('Error al cargar el archivo:', error)
@@ -428,10 +476,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const person = document.querySelector('#person')
   person.style.display = 'none'
   leeVersion('version')
-  setTimeout(() => {
-    leeApp(`log`)
-  }, 200)
-  generaOverlay()
-  spinner.style.visibility = 'hidden'
-  finPerformance()
+  await new Promise((resolve) => setTimeout(resolve, 200)) // Espera 200ms
+
+  await leeApp('log') // Paso 3: Llama a leeApp
+
+  generaOverlay() // Paso 4: Llama a generaOverlay después de que leeApp termine
+
+  spinner.style.visibility = 'hidden' // Oculta el spinner
+  finPerformance() // Paso 5: Finaliza la performance
+  // setTimeout(() => {
+  //   leeApp(`log`)
+  // }, 200)
+  // generaOverlay()
+  // spinner.style.visibility = 'hidden'
+  // finPerformance()
 })
