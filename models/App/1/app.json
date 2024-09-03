@@ -29,13 +29,14 @@
       "FFL1",
       "FFL2",
       "Puré",
+      "Safety",
       "BOS - Reglas de Oro",
       "SCG",
       "Admin"
     ],
-    "type": ["btn", "btn", "btn", "btn", "btn", "ctrl", "ctrl"],
-    "ruta": ["", "", "", "", "", "Menu/index.php", "Admin/index.php"],
-    "nivel": [1, 1, 1, 1, 1, 3, 4],
+    "type": ["btn", "btn", "btn", "btn", "btn", "btn", "ctrl", "ctrl"],
+    "ruta": ["", "", "", "", "", "", "Menu/index.php", "Admin/index.php"],
+    "nivel": [1, 1, 1, 1, 1, 1, 3, 4],
     "Especialidades": {
       "name": ["TONELADAS", "ROVE", "DWT"],
       "type": ["ctrl", "ctrl", "btn"],
@@ -389,6 +390,25 @@
           }
         }
       }
+    },
+    "Safety": {
+      "name": ["INCIDENTES", "Autoinspecciones MAS", "X"],
+      "type": ["ctrl", "btn", "ctrl"],
+      "ruta": [
+        "control_N=106&control_T=INCIDENTE&nr=0",
+        "",
+        "control_N=119&control_T=BOS%20SEGURIDAD%20AS&nr=0"
+      ],
+      "nivel": [1, 1, 1]
+    },
+    "Autoinspecciones MAS": {
+      "name": ["Operativas", "Oficinas"],
+      "type": ["ctrl", "btn"],
+      "ruta": [
+        "control_N=330&control_T=AUTOINSPECCIONES%20MAS%20OPERATIVAS&nr=0",
+        "control_N=331&control_T=AUTOINSPECCIONES%20MAS%20OFICINAS&nr=0"
+      ],
+      "nivel": [1, 1]
     }
   }
 }
