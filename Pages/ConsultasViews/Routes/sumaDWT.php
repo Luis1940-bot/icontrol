@@ -2,6 +2,7 @@
 
 function sumaSimple($arr_customers) {
     try {
+      
         // $arrayPHP = $arr_customers;
         $primerElemento = $arr_customers[0];
         $primerElementoSinUltimos4 = array_slice($primerElemento, 0, -4);
@@ -42,11 +43,11 @@ function sumaSimple($arr_customers) {
               }
               $ut = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               // echo $ut."\n";
-              if (strtolower($ut) === 'ubicaci_u00f3n_t_u00e9cnica') {
+              if (strtolower($ut) === 'ubicaci_u00f3n_t_u00e9cnica' || strtolower($ut) === 'ubicaci_n_t_cnica') {
                 $ubicacionTecica = $fila[14];
               }
               $eq = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
-              if (strtolower($eq) === 'denominaci_u00f3n_de_equipo') {
+              if (strtolower($eq) === 'denominaci_u00f3n_de_equipo' || strtolower($ut) === 'denominaci_n_de_equipo') {
                 $equipo = $fila[14];
               }
               $cp = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);

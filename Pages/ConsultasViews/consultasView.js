@@ -51,6 +51,7 @@ const goLanding = document.querySelector('.custom-button')
 goLanding.addEventListener('click', () => {
   const url = `${SERVER}/Pages/Landing`
   window.location.href = url
+  // window.open(url, '_blank')
 })
 
 function leeVersion(json) {

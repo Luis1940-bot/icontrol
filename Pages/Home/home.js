@@ -239,7 +239,7 @@ function alertar(men) {
 function leeApp(json) {
   readJSON(json)
     .then((data) => {
-      console.log(appJSON, data)
+      //console.log(appJSON, data)
       Object.assign(appJSON, data)
       navegador.estadoAnteriorButton = 'apps'
       navegador.estadoAnteriorWhereUs.push('apps')

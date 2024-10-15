@@ -17,6 +17,7 @@ function consultar($call, $desde, $hasta, $operation)
         if ($desde === null || $hasta === null) {
           $sql = "CALL ".$call."()";
         }
+        $dbname = "mc1000";
         $con = mysqli_connect($host,$user,$password,$dbname);
             if (!$con) {
                 // die('Could not connect: ' . mysqli_error($con));
@@ -56,6 +57,7 @@ function consultar($call, $desde, $hasta, $operation)
                   break;
               }
               $arrayResultdo = sumaSimple($arr_customers);
+    
             }
             if ($operation === NULL) {
                   $arrayResultdo = $arr_customers;
@@ -74,8 +76,7 @@ function consultar($call, $desde, $hasta, $operation)
 header("Content-Type: application/json; charset=utf-8");
 require_once dirname(dirname(dirname(__DIR__))) . '/config.php';
 $datos = file_get_contents("php://input");
-// $datos = '{"q":"proc_DWTFritasL1","desde":"2024-01-01","hasta":"2024-01-03","operation":"DWTFritas"}';
-// $datos = '{"q":"proc_TnEspecialidades","desde":"2024-01-01","hasta":"2024-01-03","operation": null}';
+$datos = '{"q":"proc_dwt","desde":"2024-10-12","hasta":"2024-10-12","operation":"DWT","ruta":"/callProcedure","rax":"&new=Tue Oct 15 2024 10:12:55 GMT-0600 (hora estándar central)"}';
 if (empty($datos)) {
     $response = array('success' => false, 'message' => 'Faltan datos necesarios.');
     echo json_encode($response);

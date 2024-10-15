@@ -30,21 +30,57 @@ function columna2(tagName, type, tds, valor, datos, i, columnaTd, selDatos) {
   }
   if (tagName === 'SELECT' && type === 'select-one') {
     if (valor) {
-      const select = td[columnaTd].childNodes[0]
-      // eslint-disable-next-line no-plusplus
-      for (let m = 0; m < select.options.length; m++) {
-        if (select.options[m].innerText === valor) {
-          select.selectedIndex = m
-          break
+      let optionFound = false
+      let select
+      let retries = 0 // Contador para reintentos
+      const maxRetries = 20 // Número máximo de reintentos
+      const retryDelay = 200 // Retraso entre cada reintento (en milisegundos)
+
+      // Función para verificar y seleccionar el valor en el select
+      function checkAndSetValues() {
+        select = td[columnaTd].childNodes[0] // Seleccionamos el <select> dentro del <td>
+        valor === 's' || valor === 'sd' ? (valor = null) : null
+        // Verificar si el select existe y si tiene opciones cargadas
+        if (select && select.options.length > 0) {
+          for (let m = 0; m < select.options.length; m++) {
+            if (select.options[m].innerText === valor) {
+              select.selectedIndex = m // Seleccionar el valor coincidente
+              optionFound = true
+              return // Terminar la función ya que encontramos la opción
+            }
+          }
+
+          // Si no se encontró la opción, agregarla como una nueva opción
+          if (!optionFound) {
+            const option = document.createElement('option')
+            option.value = datos[3] // Asegúrate de que 'datos.valorS[index]' existe
+            option.innerText = valor
+            select.appendChild(option)
+            select.selectedIndex = select.options.length - 1 // Seleccionar la nueva opción
+          }
+        } else {
+          // Si no hay opciones, reintentar hasta que estén disponibles
+          if (valor && select.hasAttribute('selector') === false) {
+            const option = document.createElement('option')
+            option.value = datos[3] // Asegúrate de que 'datos.valorS[index]' existe
+            option.innerText = valor
+            select.appendChild(option)
+            select.selectedIndex = select.options.length - 1 // Seleccionar la nueva opción
+            return
+          }
+          retries++
+          if (retries < maxRetries) {
+            setTimeout(checkAndSetValues, retryDelay) // Reintentar después de un breve retraso
+          } else {
+            console.warn(
+              `No se pudo cargar el select después de ${maxRetries} intentos.`
+            )
+          }
         }
       }
-      if (select.options.length === 0) {
-        const option = document.createElement('option')
-        // eslint-disable-next-line prefer-destructuring
-        option.value = datos[i][selDatos]
-        option.innerText = valor
-        select.appendChild(option)
-      }
+
+      // Iniciar la función para verificar y establecer el valor en el select
+      checkAndSetValues()
     }
   }
   if (tagName === 'INPUT' && type === 'checkbox') {
@@ -177,7 +213,8 @@ function cargarNR(datos) {
           datos,
           i,
           4,
-          13
+          13,
+          elementoEncontrado
         )
       }
     }
