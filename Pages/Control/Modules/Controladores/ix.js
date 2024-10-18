@@ -15,6 +15,7 @@ function insertarRegistro(objeto) {
   // eslint-disable-next-line no-console
   console.time('insert_time')
   const objLimpio = limpiarObjeto(objeto)
+  // console.log(objLimpio)
   const nuevoObjeto = encodeURIComponent(JSON.stringify(objLimpio))
   // const ruta = `${SERVER}/Pages/Control/Routes/insert.php?v=${Math.round(
   //   Math.random() * 10
@@ -46,7 +47,7 @@ function insertarRegistro(objeto) {
       .then((data) => {
         if (typeof data === 'object') {
           // eslint-disable-next-line no-console
-          // console.log(data);
+          // console.log(data)
           // eslint-disable-next-line no-console
           console.timeEnd('insert_time')
           resolve(data) // Resuelve la promesa con el valor correcto

@@ -110,17 +110,24 @@ function estilosCell(
   background,
   colorText,
   requerido,
-  display
+  display,
+  enabled
 ) {
   const cell = document.createElement('td')
   let dato = ''
   typeof datos === 'string' && datos !== null
-    ? (dato = trA(datos))
+    ? (dato = trA(datos) || datos)
     : (dato = datos)
   if (dato !== null && type === null) {
     cell.textContent = `${dato} ${requerido}` || `${dato} ${requerido}`
   } else if (dato === null && type !== null) {
     cell.appendChild(type)
+  }
+  // Deshabilitar el elemento si enabled es 1
+  if (type && enabled === 1) {
+    type.disabled = true // Inhabilita el input, select, textarea
+  } else if (type) {
+    type.disabled = false // Asegura que esté habilitado si enabled no es 1
   }
   cell.style.borderBottom = '1px solid #cecece'
   // cell.style.background = background;
@@ -147,6 +154,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
     let dato = element[orden[i]]
     const tipoDeDato = element[5]
     const tipoDeObservacion = element[9]
+    let enabled = 0
     let alignCenter = 'left'
     let paddingLeft = '0px'
     let colSpan = 0
@@ -228,6 +236,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
         valorXDefecto
       )
       type = inputDate
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'h') {
       dato = null
       const [valorXDefecto] = element[20] !== '' ? [element[20]] : []
@@ -239,6 +248,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
         valorXDefecto
       )
       type = inputHora
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'x') {
       dato = ''
       type = null
@@ -249,12 +259,14 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
       const inputText = ElementGenerator.generateInputText(width, valorXDefecto)
       elementHTML = inputText
       type = inputText
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'b') {
       dato = null
       let checked = false
       element[20] === '1' ? (checked = true) : (checked = false)
       const inputCheckBox = ElementGenerator.generateInputCheckBox(checked)
       type = inputCheckBox
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'n') {
       dato = null
       const [valorXDefecto] = element[20] !== '' ? [element[20]] : []
@@ -265,6 +277,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
       )
       elementHTML = inputNumber
       type = inputNumber
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'tx') {
       dato = null
       const [valorXDefecto] = element[20] !== '' ? [element[20]] : []
@@ -275,19 +288,23 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
       indexMas === cantidadDeRegistros
         ? ((colSpan = 1), (alignCenter = 'left'), (paddingLeft = '3px'))
         : null
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'sd') {
       dato = null
       const hijo = element[24]
       const sqlHijo = element[25]
       selectDinamic = ElementGenerator.generateSelectDinamic(hijo, sqlHijo)
       type = selectDinamic
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 's') {
       dato = null
+      const [valorXDefecto] = element[20] !== '' ? [element[20]] : []
       const arraySel = arrayGlobal.arraySelect.filter(
         (ele) => ele[2] === element[12]
       )
-      const select = ElementGenerator.generateSelect(arraySel)
+      const select = ElementGenerator.generateSelect(arraySel, valorXDefecto)
       type = select
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'img') {
       dato = null
       const text = '📸'
@@ -326,6 +343,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
         'InputButton-transparent'
       )
       type = buttonQuery
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'r') {
       dato = null
       let checked = false
@@ -337,6 +355,7 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
         name
       )
       type = radioButton
+      element[29] === '1' ? ((background = '#cecece'), (enabled = 1)) : null
     } else if (i === 2 && tipoDeDato === 'photo') {
       dato = null
       const src = element[20]
@@ -353,6 +372,23 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
         plant
       )
       type = img
+    } else if (i === 2 && tipoDeDato === 'valid') {
+      dato = null
+      let text = 'VALIDAR'
+      const anchoButton =
+        widthScreenAjustado * widthScreen * arrayWidthEncabezado[2] * 0.2
+      const wordLenght = text.length * 7
+      const caracteres = Math.ceil((wordLenght - anchoButton) / 7)
+      text = `${text.substring(0, caracteres)}.`
+      const inputButton = ElementGenerator.generateValidButton(
+        text,
+        'VALIDAR',
+        objTrad,
+        'InputButton-transparent',
+        plant,
+        index
+      )
+      type = inputButton
     }
     if (i > 2 && tipoDeDato === 'tx') {
       const indexMas = index + 1
@@ -481,7 +517,8 @@ function estilosTbodyCell(element, index, cantidadDeRegistros) {
       background,
       colorText,
       requerido,
-      display
+      display,
+      enabled
     )
     newRow.appendChild(cell)
   }
@@ -526,10 +563,20 @@ function completaTabla(arrayControl) {
     const porcentaje = parseFloat(
       unidades / parseFloat(cantidadDeRegistros + 0.2)
     )
-    const idSpanCarga = document.getElementById('idSpanCarga')
-    setTimeout(() => {
-      idSpanCarga.innerText = `${Math.floor(porcentaje * 100)}%`
-    }, 100)
+    function updateProgress() {
+      const idSpanCarga = document.getElementById('idSpanCarga')
+      if (idSpanCarga) {
+        const porcentaje = (100 * (fila / cantidadDeRegistros)).toFixed(0)
+        idSpanCarga.innerText = `${porcentaje}%`
+      } else {
+        requestAnimationFrame(updateProgress) // Reintentar en el siguiente frame
+      }
+    }
+    let fila = 0
+    updateProgress()
+    // setTimeout(() => {
+    //   idSpanCarga.innerText = `${Math.floor(porcentaje * 100)}%`
+    // }, 100)
     const newRow = estilosTbodyCell(element, index, cantidadDeRegistros)
     tbody.appendChild(newRow)
     fila += 1

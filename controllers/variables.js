@@ -7,6 +7,7 @@ let arrayEmpresa = []
 let arrayControl = []
 let objetoControl = {
   fecha: [],
+
   nuxpedido: [],
   desvio: [],
   valor: [],

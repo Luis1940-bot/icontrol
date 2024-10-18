@@ -17,8 +17,10 @@ function insertar_registro($datos) {
       $interrogantes?$interrogantes=$interrogantes.','.':'.$clave:$interrogantes=':'.$clave;
       $i++;
   }
+  
   // include_once $_SERVER['DOCUMENT_ROOT']."/Routes/datos_base.php";
   include_once BASE_DIR . "/Routes/datos_base.php";
+
   $pdo = new PDO("mysql:host={$host};dbname={$dbname};port={$port};chartset={$charset}",$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
   $sql="INSERT INTO LTYregistrocontrol (".$campos.") VALUES (".$interrogantes.");";
   $c=0;
@@ -30,6 +32,7 @@ function insertar_registro($datos) {
   $pdo->beginTransaction();
   $sentencia = $pdo->prepare($sql);
   $nuxpedido=generaNuxPedido();
+
   for ($i=0; $i <$cantidad_registros ; $i++){
       foreach ($objeto_json as $clave => $valor){
         $tipodedato="PDO::PARAM_STR";

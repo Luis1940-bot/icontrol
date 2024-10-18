@@ -176,11 +176,14 @@ function recorroTable(objetoControl, arrayControl, nux) {
         if (c === 2) {
           respuesta = respuestaColumna(c, i, objParametros)
           ;({ valor, selector1, valorS, familiaselector } = respuesta)
+          i === 0 && type === 'date' ? objetoControl.fecha.push(valor) : null
+          // i === 1 && type === 'time' ? objetoControl.hora.push(valor) : null
         }
         if (c === 4) {
           respuesta = respuestaColumna(c, i, objParametros)
           ;({ selector2, valorOBS, familiaselector, imagenes, observacion } =
             respuesta)
+          i > 0 ? objetoControl.fecha.push('') : null
         }
 
         if (c === 4) {
@@ -188,7 +191,10 @@ function recorroTable(objetoControl, arrayControl, nux) {
           objetoControl.name.push(campo.textContent)
           fechaActual = fechasGenerator.fecha_corta_yyyymmdd(new Date())
           horaActual = fechasGenerator.hora_actual(new Date())
-          objetoControl.fecha.push(fechaActual)
+          // i > 2 && type === 'date'
+          //   ? objetoControl.fecha.push(valor)
+          //   : objetoControl.fecha.push('')
+          // objetoControl.fecha.push(fechaActual)
           objetoControl.nuxpedido.push(0)
           valor !== null
             ? objetoControl.valor.push(valor)

@@ -136,6 +136,11 @@ function trO(palabra) {
 function actualizarProgreso(porcentaje) {
   return new Promise((resolve) => {
     const idSpanCarga = document.getElementById('idSpanCarga')
+    // Validar que idSpanCarga exista
+    if (!idSpanCarga) {
+      console.error("Elemento 'idSpanCarga' no encontrado en el DOM.")
+      return reject(new Error("Elemento 'idSpanCarga' no disponible."))
+    }
     const startTime = new Date().getTime()
     const duration = 1000 // Duración total en milisegundos (1 segundo)
     const startPercentage = parseFloat(idSpanCarga.innerText) || 0 // Obtener el porcentaje inicial
