@@ -105,6 +105,7 @@ function recorroTable(objetoControl, arrayControl, nux) {
     } else {
       nuxpedido = nux
     }
+    let fechaSuper = ''
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < tr.length; i++) {
       let valor
@@ -176,14 +177,16 @@ function recorroTable(objetoControl, arrayControl, nux) {
         if (c === 2) {
           respuesta = respuestaColumna(c, i, objParametros)
           ;({ valor, selector1, valorS, familiaselector } = respuesta)
-          i === 0 && type === 'date' ? objetoControl.fecha.push(valor) : null
+          i === 0 && type === 'date'
+            ? (objetoControl.fecha.push(valor), (fechaSuper = valor))
+            : null
           // i === 1 && type === 'time' ? objetoControl.hora.push(valor) : null
         }
         if (c === 4) {
           respuesta = respuestaColumna(c, i, objParametros)
           ;({ selector2, valorOBS, familiaselector, imagenes, observacion } =
             respuesta)
-          i > 0 ? objetoControl.fecha.push('') : null
+          i > 0 ? objetoControl.fecha.push(fechaSuper) : null
         }
 
         if (c === 4) {
