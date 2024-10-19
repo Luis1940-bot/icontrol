@@ -2,7 +2,11 @@
 
 function sumaSimple($arr_customers) {
     try {
-      
+      // foreach ($arr_customers as $row) {
+      //     echo implode(" | ", $row) . "<br>";  // Usar saltos de línea para HTML
+      //     // O para consola:
+      //     // echo implode(" | ", $row) . PHP_EOL; 
+      // }
         // $arrayPHP = $arr_customers;
         $primerElemento = $arr_customers[0];
         $primerElementoSinUltimos4 = array_slice($primerElemento, 0, -4);
@@ -36,6 +40,12 @@ function sumaSimple($arr_customers) {
             $filasDocUnico = array_filter($arr_customers, function ($row) use ($docUnico) {
               return $row[1] === $docUnico;
             });
+      // foreach ($filasDocUnico as $row) {
+      //     echo implode(" | ", $row) . "<br>";  // Usar saltos de línea para HTML
+      //     // O para consola:
+      //     // echo implode(" | ", $row) . PHP_EOL; 
+      // }
+
             foreach ($filasDocUnico as $fila) {
               if (isset($fila[9]) && $fila[9] !== null && $fila[9] !== '' ) {
                 $observacionActual  = $fila[9];
@@ -44,15 +54,15 @@ function sumaSimple($arr_customers) {
               $ut = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               // echo $ut."\n";
               if (strtolower($ut) === 'ubicaci_u00f3n_t_u00e9cnica' || strtolower($ut) === 'ubicaci_n_t_cnica') {
-                $ubicacionTecica = $fila[14];
+                $ubicacionTecica = ($fila[14] === 's' || $fila[14] === 'sd') ? '' : $fila[14];
               }
               $eq = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               if (strtolower($eq) === 'denominaci_u00f3n_de_equipo' || strtolower($ut) === 'denominaci_n_de_equipo') {
-                $equipo = $fila[14];
+                $equipo = ($fila[14] === 's' || $fila[14] === 'sd') ? '' : $fila[14];
               }
               $cp = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               if (strtolower($cp) === 'componente') {
-                $componente = $fila[14];
+                $componente = ($fila[14] === 's' || $fila[14] === 'sd') ? '' : $fila[14];
               }
               $tpm = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               if (strtolower($tpm) === 'tipos_de_mantenimiento' || strtolower($tpm) === 'tipo_de_mantenimiento') {
@@ -79,18 +89,23 @@ function sumaSimple($arr_customers) {
               }
 
               $parada = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
-              if (strtolower($parada) === 'parada_total') {
+              $parada_14 = $fila[14];
+              if ((strtolower($parada) === 'parada_total' || strtolower($parada) === 'parada total') && $parada_14 === '1') {
                 $paradaTotal = $minutos;
+                $minutos = '';
               }
               $baja = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
-              if (strtolower($baja) === 'baja_en_la_velocidad') {
+              $baja_14 = $fila[14];
+              if ((strtolower($baja) === 'baja_en_la_velocidad' || strtolower($baja) === 'baja en la velocidad') && $baja_14 === '1') {
                 $bajaDeVelocidad = $minutos;
+                $minutos = '';
                  if (isset($fila[9]) && $fila[9] !== null && $fila[9] !== '' ) {
                   $LRR  = $fila[9];
                 }
               }
 
             }
+
             $observaciones = ltrim($observaciones, '. ');
             $observaciones = rtrim($observaciones, ' .');
 
@@ -113,8 +128,13 @@ function sumaSimple($arr_customers) {
                 );
             }
            $arrayNuevo[] = $nuevaFila;
-         
+
         }
+      // foreach ($filasDocUnico as $row) {
+      //     echo implode(" | ", $row) . "<br>";  // Usar saltos de línea para HTML
+      //     // O para consola:
+      //     // echo implode(" | ", $row) . PHP_EOL; 
+      // }
         // print_r($arrayNuevo);
         return $arrayNuevo;
     } catch (\Throwable $e) {
