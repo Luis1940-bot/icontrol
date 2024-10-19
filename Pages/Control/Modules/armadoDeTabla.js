@@ -554,29 +554,21 @@ async function traerValorPorDefecto(sqli, tipo, html) {
 function completaTabla(arrayControl) {
   const tbody = document.querySelector('tbody')
   const cantidadDeRegistros = arrayControl.length
+
   const email = arrayControl[0][22]
   email === '1'
     ? sessionStorage.setItem('envia_por_email', true)
     : sessionStorage.setItem('envia_por_email', false)
+
   arrayControl.forEach((element, index) => {
     const unidades = parseFloat(index + 1)
     const porcentaje = parseFloat(
       unidades / parseFloat(cantidadDeRegistros + 0.2)
     )
-    function updateProgress() {
-      const idSpanCarga = document.getElementById('idSpanCarga')
-      if (idSpanCarga) {
-        const porcentaje = (100 * (fila / cantidadDeRegistros)).toFixed(0)
-        idSpanCarga.innerText = `${porcentaje}%`
-      } else {
-        requestAnimationFrame(updateProgress) // Reintentar en el siguiente frame
-      }
-    }
-    let fila = 0
-    updateProgress()
-    // setTimeout(() => {
-    //   idSpanCarga.innerText = `${Math.floor(porcentaje * 100)}%`
-    // }, 100)
+
+    setTimeout(() => {
+      idSpanCarga.innerText = `${Math.floor(porcentaje * 100)}%`
+    }, 100)
     const newRow = estilosTbodyCell(element, index, cantidadDeRegistros)
     tbody.appendChild(newRow)
     fila += 1

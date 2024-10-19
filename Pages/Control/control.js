@@ -138,7 +138,7 @@ function actualizarProgreso(porcentaje) {
     const idSpanCarga = document.getElementById('idSpanCarga')
     // Validar que idSpanCarga exista
     if (!idSpanCarga) {
-      console.error("Elemento 'idSpanCarga' no encontrado en el DOM.")
+      // console.error("Elemento 'idSpanCarga' no encontrado en el DOM.")
       return reject(new Error("Elemento 'idSpanCarga' no disponible."))
     }
     const startTime = new Date().getTime()
