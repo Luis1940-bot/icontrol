@@ -113,8 +113,7 @@ function configuracionLoad() {
   nr = url.nr
   nr === '0' ? (nr = '') : sessionStorage.setItem('doc', encriptar(nr))
   document.getElementById('doc').innerText = `Doc: ${nr}`
-  document.getElementById('wichC').innerText = controlT
-
+  document.getElementById('wichC').innerText = `${controlN}-${controlT}`
   configPHP()
   finPerformance()
 }

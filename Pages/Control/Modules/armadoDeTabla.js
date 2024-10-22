@@ -631,7 +631,9 @@ async function arraysLoadTranslate() {
     const url = desencriptar(contenido)
     // const url = new URL(window.location.href);
     const controlT = url.control_T // url.searchParams.get('control_T');
-    document.getElementById('wichC').innerText = trA(controlT)
+    const controlN = url.control_N
+    document.getElementById('wichC').innerText =
+      `${controlN}-${trA(controlT)}` || `${controlN}-${controlT}`
   }
 }
 

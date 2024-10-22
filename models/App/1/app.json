@@ -190,7 +190,7 @@
             "control_N=234&control_T=DWT%20FRITAS%20L1%20NO%20PLANEADO%20CORRELACIÓN%20RAW%20vs%20LÍNEA&nr=0",
             "control_N=235&control_T=DWT%20FRITAS%20L1%20NO%20PLANEADO%20OTROS&nr=0",
             "",
-            "control_N=263&control_T=DWT%20FRITAS%20L1%20NO%20PLANEADO%20MANTENIMIENTO%20MECÁNICO&nr=0"
+            "control_N=263&control_T=DWT%20FRITAS%20L1%20NO%20PLANEADO%20MANTENIMIENTO&nr=0"
           ],
           "nivel": [1, 1, 1, 1, 1],
           "DWT PRODUCCIÓN FFL1": {
@@ -275,7 +275,7 @@
             "control_N=197&control_T=DWT%20FRITAS%20L2%20NO%20PLANEADO%20CORRELACIÓN%20RAW%20vs%20LÍNEA&nr=0",
             "control_N=198&control_T=DWT%20FRITAS%20L2%20NO%20PLANEADO%20OTROS&nr=0",
             "",
-            "control_N=226&control_T=DWT%20FRITAS%20L1%20NO%20PLANEADO%20MANTENIMIENTO%20MECÁNICO&nr=0"
+            "control_N=226&control_T=DWT%20FRITAS%20L2%20NO%20PLANEADO%20MANTENIMIENTO&nr=0"
           ],
           "nivel": [1, 1, 1, 1, 1],
           "DWT PRODUCCIÓN FFL2": {

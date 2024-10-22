@@ -139,6 +139,40 @@ function columna2(tagName, type, tds, valor, datos, i, columnaTd, selDatos) {
       ul.appendChild(li)
     }
   }
+  const tipodedato = datos[i][4]
+  if (tagName === 'DIV' && tipodedato === 'cn') {
+    //es una consulta cn con button
+    let inputElement = document.querySelector('td div.button-cn input')
+    inputElement.value = valor
+  }
+  if (tagName === 'DIV' && tipodedato === 'valid') {
+    if (valor !== '') {
+      const div = tds[2]
+      while (div.firstChild) {
+        div.removeChild(div.firstChild)
+      }
+      const tbody = document.querySelector('#tableControl tbody')
+      const row = tbody.rows[index]
+      if (row && row.cells.length >= 3) {
+        row.cells[3].innerHTML = ''
+        const previousCell = row.cells[2]
+        previousCell.colSpan = (previousCell.colSpan || 1) + 1
+        row.removeChild(row.cells[3])
+      }
+      const inputText = document.createElement('input')
+      inputText.setAttribute('type', 'text')
+      inputText.setAttribute('disabled', false)
+      inputText.style.border = 'none'
+      inputText.value = `${valor}`
+
+      div.appendChild(inputText)
+    }
+  }
+  if (tagName === 'INPUT' && type === 'radio') {
+    const radio = td[columnaTd].childNodes[0]
+    console.log(radio)
+    valor === '1' ? (radio.checked = true) : (radio.checked = false)
+  }
 }
 
 async function verSupervisor(idSupervisor) {
