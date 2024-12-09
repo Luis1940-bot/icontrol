@@ -17,7 +17,7 @@ function consultar($call, $desde, $hasta, $operation)
         if ($desde === null || $hasta === null) {
           $sql = "CALL ".$call."()";
         }
-        // $dbname = 'mc1000';
+        // $dbname = 'mc1000'; //!MUTEAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRR
         $con = mysqli_connect($host,$user,$password,$dbname);
             if (!$con) {
                 // die('Could not connect: ' . mysqli_error($con));
@@ -38,7 +38,7 @@ function consultar($call, $desde, $hasta, $operation)
             while ($row = mysqli_fetch_assoc($result)) {
                 $arr_customers[] = array_values($row);
             }
-    
+    // echo $operation;
           // echo "Antes de la inclusión: " . json_encode($arr_customers) . PHP_EOL;
             if ($operation !== null && count($arr_customers) > 1) {
               switch ($operation) {
@@ -64,7 +64,7 @@ function consultar($call, $desde, $hasta, $operation)
              }
             // echo "Después de la inclusión: " . json_encode($arrayResultdo) . PHP_EOL;
             $json = json_encode($arrayResultdo);
-            echo $json;
+            echo $json; //! DESMUTEADOOOOOOOOOOO
             mysqli_close($con);
             // $pdo=null;
     } catch (\PDOException $e) {
@@ -76,7 +76,7 @@ function consultar($call, $desde, $hasta, $operation)
 header("Content-Type: application/json; charset=utf-8");
 require_once dirname(dirname(dirname(__DIR__))) . '/config.php';
 $datos = file_get_contents("php://input");
-// $datos = '{"q":"proc_dwt","desde":"1900-10-12","hasta":"1900-10-12","operation":"DWT","ruta":"/callProcedure","rax":"&new=Fri Oct 18 2024 19:32:51 GMT-0600 (hora estándar central)"}';
+// $datos = '{"q":"proc_dwt","desde":"2024-11-02","hasta":"2024-11-02","operation":"DWT","ruta":"/callProcedure","rax":"&new=Sat Nov 16 2024 08:05:31 GMT-0600 (hora estándar central)"}'; //!MUTEAAAAAAAAARRRRRRR
 if (empty($datos)) {
     $response = array('success' => false, 'message' => 'Faltan datos necesarios.');
     echo json_encode($response);

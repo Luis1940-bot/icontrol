@@ -1,0 +1,17 @@
+
+
+2024-11-26|15:55|M|05|00|00|00000|00000|00000|00000|
+
+
+Definición y cantidad de caracteres por encabezados de izquierda a derecha.
+
+FECHA: 10(cambia)
+HORA: 5(cambia)
+TURNO: 1, M-mañana, T-tarde, N-noche
+PLANTA: 2(siempre 05 no cambia)
+MATERIA PRIMA:2(cambia con la producción y la línea)
+FAMILIA DEL PRODUCTO TERMINADO: 2(por ejemplo "fritas=01", para otros armamos código)
+FACTOR DE CORRECCIÓN:5
+LR NOMINAL [TnHr]:5
+LR c/DWT [Tn]:5
+KILOS EMPACADOS [Kg]: 5

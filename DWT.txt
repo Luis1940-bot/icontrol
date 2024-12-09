@@ -1,0 +1,13 @@
+
+
+PLC0001|2024-11-26|15:45|15:50
+
+Os dados necessários são:
+
+Primeiro: código PLC
+Segundo: Data do evento
+Terceiro: Horário de início do evento
+Quarto: Hora de término do evento
+
+Você pode enviar a quantidade de caracteres e o formato que é do PLC, depois formatamos no Factum.
+Certamente haverá um número fixo de caracteres por conceito.

@@ -31,6 +31,9 @@ function sumaSimple($arr_customers) {
             $equipo = '';
             $componente = '';
             $tipoDeMantenimiento = '';
+            $tipoDePlaneado = null;
+            $pasaPlan = true;
+            $yaRegistroPlan = false;
             $inicioDeParada = '';
             $finDeParada = '';
             $minutos = '';
@@ -46,13 +49,13 @@ function sumaSimple($arr_customers) {
       //     // echo implode(" | ", $row) . PHP_EOL; 
       // }
 
-            foreach ($filasDocUnico as $fila) {
+            foreach ($filasDocUnico as  $fila) {
               if (isset($fila[9]) && $fila[9] !== null && $fila[9] !== '' ) {
                 $observacionActual  = $fila[9];
                 $observaciones .= $observacionActual . '.';
               }
               $ut = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
-              // echo $ut."\n";
+              // echo $ut."***\n";
               if (strtolower($ut) === 'ubicaci_u00f3n_t_u00e9cnica' || strtolower($ut) === 'ubicaci_n_t_cnica') {
                 $ubicacionTecica = ($fila[14] === 's' || $fila[14] === 'sd') ? '' : $fila[14];
               }
@@ -64,10 +67,21 @@ function sumaSimple($arr_customers) {
               if (strtolower($cp) === 'componente') {
                 $componente = ($fila[14] === 's' || $fila[14] === 'sd') ? '' : $fila[14];
               }
+            
+              $planNoPlan = preg_replace('/[^a-z0-9]+/i', '_', $fila[4]);
+              $pnp = preg_replace('/[^a-z0-9]+/i', '_', substr($fila[13], 0, 10));
+
+              if (strtolower($planNoPlan) === 'planeado' && $pasaPlan === true && $yaRegistroPlan === false && (strtolower($pnp) === 'parada_de_' || strtolower($pnp) === 'parada_por')) {
+                $tipoDePlaneado = $fila[13];
+                $tipoDeMantenimiento = null;
+                $pasaPlan = false;
+              } 
+     
+
               $tpm = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               if (strtolower($tpm) === 'tipos_de_mantenimiento' || strtolower($tpm) === 'tipo_de_mantenimiento') {
                 $tipoDeMantenimiento = $fila[14];
-              }
+              } 
               $ini = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               if (strtolower($ini) === 'inicio_de_parada') {
                 $inicioDeParada = $fila[14];
@@ -85,9 +99,14 @@ function sumaSimple($arr_customers) {
                         $diferencia = $dateTimeIni->diff($dateTimeFin);
                         $minutos = $diferencia->h * 60 + $diferencia->i;
                   }
-                }
+                  if ($pasaPlan === false) {
+                    $yaRegistroPlan = true;
+                  }
+                }else{
+                    $pasaPlan= true;
+                  }
               }
-
+          
               $parada = preg_replace('/[^a-z0-9]+/i', '_', $fila[13]);
               $parada_14 = $fila[14];
               if ((strtolower($parada) === 'parada_total' || strtolower($parada) === 'parada total') && $parada_14 === '1') {
@@ -110,13 +129,17 @@ function sumaSimple($arr_customers) {
             $observaciones = rtrim($observaciones, ' .');
 
             foreach ($filasDocUnico as $fila) {
+              $manto = $tipoDeMantenimiento;
+              if ($tipoDeMantenimiento === null) {
+                $manto = $tipoDePlaneado;
+              }
                 $nuevaFila = array(
                     $fila[0],  // 'FECHA' => $fila[0],
                     $fila[1],  // 'DOC' => $fila[1],
                     $fila[2],  // 'REPORTE' => $fila[2],
                     $fila[3],  // 'LÍNEA' => $fila[3],
                     $fila[4],  // 'TIPO PLAN' => $fila[4],
-                    $fila[5] . ' ' . $tipoDeMantenimiento,  // 'ÁREA' => $fila[5].' '.$tipoDeMantenimiento,
+                    $fila[5] . ' ' . $manto,  // 'ÁREA' => $fila[5].' '.$tipoDeMantenimiento,
                     $ubicacionTecica,  // 'UBICACIÓN' => $ubicacionTecica,
                     $equipo,  // 'EQUIPO' => $equipo,
                     $componente,  // 'COMPONENTE' => $componente,
@@ -128,7 +151,7 @@ function sumaSimple($arr_customers) {
                 );
             }
            $arrayNuevo[] = $nuevaFila;
-
+           $tipoDeMantenimiento='';
         }
       // foreach ($filasDocUnico as $row) {
       //     echo implode(" | ", $row) . "<br>";  // Usar saltos de línea para HTML

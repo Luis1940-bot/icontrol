@@ -200,11 +200,13 @@ function sumaSimple($arr_customers) {
             $filasDocUnico = array_filter($arr_customers, function ($row) use ($docUnico) {
               return $row[1] === $docUnico;
             });
+            // var_dump($docsUnicos);
              foreach ($filasDocUnico as $index => $fila) {
                 $filas = count($filasDocUnico);
                 $con = preg_replace('/[^a-z0-9]+/i', '_', $fila[6]);
                 if (strtolower($con) === 'parada_por_mantenimiento' || strtolower($con) === 'tipos_de_mantenimiento') {
                   $originalArr = $arr_customers;
+                  // var_dump($originalArr);
                   $nuevaFila = paradaPorManteniemiento($filas, $index, $originalArr);
                   if (is_array($nuevaFila)) {
                       $arrayNuevo = array_merge($arrayNuevo, $nuevaFila);
@@ -217,7 +219,7 @@ function sumaSimple($arr_customers) {
         }
          array_unshift($arrayNuevo, $primerElemento);
         //  echo json_encode($arrayNuevo );
-         return $arrayNuevo;
+        return $arrayNuevo;
   } catch (\Throwable $e) {
     print "Error!: " . $e->getMessage() . "<br>";
     die();

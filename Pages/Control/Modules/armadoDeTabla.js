@@ -567,6 +567,7 @@ function completaTabla(arrayControl) {
     )
 
     setTimeout(() => {
+      const idSpanCarga = document.getElementById('idSpanCarga')
       idSpanCarga.innerText = `${Math.floor(porcentaje * 100)}%`
     }, 100)
     const newRow = estilosTbodyCell(element, index, cantidadDeRegistros)

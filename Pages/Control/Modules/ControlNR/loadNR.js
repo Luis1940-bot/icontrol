@@ -18,8 +18,6 @@ function columna2(tagName, type, tds, valor, datos, i, columnaTd, selDatos) {
     (tagName === 'INPUT' && type === 'date') ||
     (tagName === 'INPUT' && type === 'time')
   ) {
-    // console.log(value)
-    // console.log(valor)
     td[columnaTd].childNodes[0].value = valor
   }
   if (
@@ -170,7 +168,6 @@ function columna2(tagName, type, tds, valor, datos, i, columnaTd, selDatos) {
   }
   if (tagName === 'INPUT' && type === 'radio') {
     const radio = td[columnaTd].childNodes[0]
-    console.log(radio)
     valor === '1' ? (radio.checked = true) : (radio.checked = false)
   }
 }
@@ -234,6 +231,7 @@ function cargarNR(datos) {
           (element, i) => i === 5 && element === codigo.trim()
         )
       })
+      // console.log(elementoEncontrado)
       // codigo.trim() === datos[i][5].trim()
       if (elementoEncontrado) {
         const valor = elementoEncontrado[3]

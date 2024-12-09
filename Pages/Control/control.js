@@ -207,7 +207,7 @@ async function cargaDeRegistros() {
       setTimeout(() => {
         cargarNR(controlNr)
         // eslint-disable-next-line no-console
-        // console.log(cargaNR);
+        // console.log(controlNr)
       }, 1000)
     }
   } catch (error) {

@@ -629,6 +629,39 @@ const funcionSalir = () => {
 const funcionExportarExcel = () => {
   try {
     const tabla = document.getElementById('tableConsultaViews')
+    const rows = tabla.getElementsByTagName('tr')
+    const opcionesValidas = ['FECHA', 'fecha', 'DATE', 'date', 'DATA', 'data']
+
+    // Verificar que la tabla tenga al menos dos filas (encabezado y datos)
+    if (rows.length > 1) {
+      // Obtener los encabezados de la primera fila, considerando que pueden estar en <td> o <th>
+      const encabezados = rows[0].querySelectorAll('td, th')
+      // Iterar sobre cada fila de datos (a partir de la segunda fila)
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td')
+
+        // Iterar sobre cada celda de la fila
+        for (let j = 0; j < cells.length; j++) {
+          const cell = cells[j]
+          const campoFecha = encabezados[j]?.innerText.trim() // Obtener el encabezado correspondiente
+
+          // Verificar si el encabezado es una opción válida y la celda tiene una fecha válida
+          if (
+            opcionesValidas.includes(campoFecha) &&
+            !isNaN(Date.parse(cell.textContent.trim()))
+          ) {
+            const fecha = new Date(cell.textContent.trim())
+            const dia = fecha.getDate().toString().padStart(2, '0')
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0')
+            const anio = fecha.getFullYear()
+            cell.textContent = `${dia}-${mes}-${anio}`
+          }
+        }
+      }
+    } else {
+      console.warn('La tabla no tiene suficientes filas para procesar.')
+    }
+
     const wb = XLSX.utils.table_to_book(tabla, { sheet: 'Sheet JS' })
     const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
     const blob = new Blob([wbout], { type: 'application/octet-stream' })
