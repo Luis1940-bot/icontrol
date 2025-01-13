@@ -6,6 +6,8 @@ session_start([
 header('Content-Type: text/html;charset=utf-8');
 $url = "https://factumconsultora.com/mccain/index.php";
 define('SSO', $_SESSION['login_sso']['sso']);
+var_dump(SSO);
+var_dump($_SESSION);
  if (isset($_SESSION['login_sso']['email'] )) {
       define('EMAIL', $_SESSION['login_sso']['email']);
   } else {

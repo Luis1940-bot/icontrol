@@ -632,64 +632,74 @@ const funcionExportarExcel = () => {
     const rows = tabla.getElementsByTagName('tr')
     const opcionesValidas = ['FECHA', 'fecha', 'DATE', 'date', 'DATA', 'data']
 
-    // Verificar que la tabla tenga al menos dos filas (encabezado y datos)
     if (rows.length > 1) {
-      // Obtener los encabezados de la primera fila, considerando que pueden estar en <td> o <th>
-      const encabezados = rows[0].querySelectorAll('td, th')
-      // Iterar sobre cada fila de datos (a partir de la segunda fila)
+      // Obtener los encabezados de la primera fila
+      const encabezados = Array.from(rows[0].querySelectorAll('td, th')).map(
+        (th) => th.innerText.trim()
+      )
+
+      // Crear un array para almacenar los datos procesados
+      const datos = []
+
+      // Agregar encabezados al array de datos
+      datos.push(encabezados)
+
+      // Iterar sobre las filas de datos
       for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName('td')
+        const fila = []
 
-        // Iterar sobre cada celda de la fila
+        // Iterar sobre las celdas de la fila
         for (let j = 0; j < cells.length; j++) {
           const cell = cells[j]
-          const campoFecha = encabezados[j]?.innerText.trim() // Obtener el encabezado correspondiente
+          const campoFecha = encabezados[j] // Encabezado correspondiente
 
-          // Verificar si el encabezado es una opción válida y la celda tiene una fecha válida
           if (
             opcionesValidas.includes(campoFecha) &&
             !isNaN(Date.parse(cell.textContent.trim()))
           ) {
+            // Formatear como fecha
             const fecha = new Date(cell.textContent.trim())
-            const dia = fecha.getDate().toString().padStart(2, '0')
-            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0')
-            const anio = fecha.getFullYear()
-            cell.textContent = `${dia}-${mes}-${anio}`
+            const fechaFormateada = fecha
+              .toLocaleDateString('es-AR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })
+              .replace(/\//g, '-')
+            fila.push(fechaFormateada) // Agregar como texto
+          } else {
+            // Agregar otros valores como están
+            fila.push(cell.textContent.trim())
           }
         }
+
+        datos.push(fila)
       }
+
+      // Crear un libro y una hoja usando XLSX
+      const ws = XLSX.utils.aoa_to_sheet(datos)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet JS')
+
+      // Escribir el archivo Excel
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+      const blob = new Blob([wbout], { type: 'application/octet-stream' })
+      const nameConsulta = document.getElementById('whereUs').textContent.trim()
+      const fechaDeHoy = fechasGenerator.fecha_larga_ddmmyyyyhhmm(new Date())
+      const a = document.createElement('a')
+      const url = URL.createObjectURL(blob)
+      a.href = url
+      a.download = `${nameConsulta} ${fechaDeHoy}.xlsx`
+
+      // Descargar archivo y limpiar
+      a.click()
+      URL.revokeObjectURL(url)
     } else {
       console.warn('La tabla no tiene suficientes filas para procesar.')
     }
-
-    const wb = XLSX.utils.table_to_book(tabla, { sheet: 'Sheet JS' })
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    const blob = new Blob([wbout], { type: 'application/octet-stream' })
-    const nameConsulta = document.getElementById('whereUs').textContent
-    // Crear un enlace y simular un clic en él
-    const a = document.createElement('a')
-    const url = URL.createObjectURL(blob)
-    a.href = url
-    const fechaDeHoy = fechasGenerator.fecha_larga_ddmmyyyyhhmm(new Date())
-    a.download = `${nameConsulta} ${fechaDeHoy}.xlsx` // Nombre predeterminado
-
-    // Abrir una ventana emergente para que el usuario elija la ubicación y el nombre del archivo
-    a.addEventListener('click', () => {
-      setTimeout(() => {
-        URL.revokeObjectURL(url)
-      }, 100)
-    })
-
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    setTimeout(() => {
-      const menu = document.getElementById('modalAlertM')
-      menu.style.display = 'none'
-      menu.remove()
-    }, 100)
   } catch (error) {
-    console.log(error)
+    console.error('Error al exportar a Excel:', error)
   }
 }
 
@@ -3594,6 +3604,7 @@ class Alerta {
             modal.style.display = 'block'
           }
           if (consulta.length > 1) {
+            // console.log(consulta)
             sessionStorage.setItem('api', encriptar(api))
             let modal = document.getElementById('modalAlertCarga')
             modal.remove()
