@@ -87,6 +87,24 @@ Usan un patron de "arrays paralelos" en el JSON: cada propiedad del objeto es un
 - No hay middleware de autenticacion: cada pagina/endpoint verifica la sesion individualmente (o no la verifica).
 - SSO toma el valor string `'null'` (no PHP null) cuando el usuario se loguea directamente.
 
+### Flujo de entrada desde el lanzador (SSO)
+
+1. El lanzador (`/mccain/`) autentica con Azure, valida el usuario en MySQL y arma `$_SESSION['login_sso']` con `sso = 'c_sso'`.
+2. El usuario selecciona "Controles" en el Selector → navega a `/scg-mccain/`.
+3. `index.php` verifica `$_SESSION['login_sso']['email']`:
+   - Si existe → define `EMAIL`, carga la página, `controllers/index.js` redirige a `Pages/Router/rutas.php?ruta=home`.
+   - Si no existe y `SSO` es `null` o `'s_sso'` → redirige al login propio (`/scg-mccain/Pages/Login/`).
+   - Si no existe y `SSO` es `'c_sso'` → redirige al lanzador (`/mccain/index.php`).
+4. La sesión se comparte por cookie `PHPSESSID` con `path=/` bajo `factumconsultora.com`.
+
+### Precaución con controllers/index.js (ruta localhost vs producción)
+
+`controllers/index.js` tiene dos líneas alternativas para la redirección inicial (líneas ~86-87):
+- `ruta=login` → para desarrollo en localhost.
+- `ruta=home` → para producción.
+
+**Siempre verificar que `ruta=home` esté activa antes de deployar.** Error documentado: 2026-10-27, se deployó con `ruta=login` activo, lo que causaba que el usuario fuera redirigido al login en lugar del menú principal incluso con sesión SSO válida.
+
 ### API externa (Pages/Api/)
 
 - `api.php`: autenticacion via token HMAC-SHA256 en query string (`?token=...&data=...`).
@@ -119,6 +137,11 @@ Usan un patron de "arrays paralelos" en el JSON: cada propiedad del objeto es un
 7. **`json_decode` check** en `traer_rove.php` — evita Warning de array access on null.
 8. **`empty()` en login.php** — evita Warning por undefined key 'sso'.
 9. **`.user.ini` creado**, **`php.ini` eliminado**.
+
+### Fixes post-auditoría (2026-10-27, ya subidos al servidor)
+
+10. **`controllers/index.js`** — activar `ruta=home` (producción) en lugar de `ruta=login` (localhost).
+11. **`index.php`** — descomentar `header("Location: ...")` y agregar `exit()` para redirigir correctamente cuando no hay sesión SSO.
 
 ### Informe completo
 
