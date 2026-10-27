@@ -27,7 +27,7 @@ function insertar_registro($datos) {
   $d=0;
   $campos=explode(",",$campos);
   $interrogantes=explode(",",$interrogantes);
-  $cantidad_registros=count($valor);
+  $cantidad_registros = is_array($valor) ? count($valor) : ($valor === null ? 0 : 1);
 
   $pdo->beginTransaction();
   $sentencia = $pdo->prepare($sql);

@@ -1,4 +1,5 @@
 <?php
+  mysqli_report(MYSQLI_REPORT_OFF);
   $plant = '0';
 
   header("Content-Type: text/html;charset=utf-8");

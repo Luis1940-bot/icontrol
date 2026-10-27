@@ -1,4 +1,5 @@
 <?php
+mysqli_report(MYSQLI_REPORT_OFF);
 $plant = $_SESSION['login_sso']['plant'];
 
   header("Content-Type: text/html;charset=utf-8");

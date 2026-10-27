@@ -207,7 +207,7 @@ async function cargaDeRegistros() {
       setTimeout(() => {
         cargarNR(controlNr)
         // eslint-disable-next-line no-console
-        // console.log(controlNr)
+        // console.log(cargaNR);
       }, 1000)
     }
   } catch (error) {
@@ -283,6 +283,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => {
         configuracionLoad()
         arraysLoadTranslate()
+
         leeApp(`App/${plant}/app`)
         spinner.style.visibility = 'hidden'
         // eslint-disable-next-line no-console

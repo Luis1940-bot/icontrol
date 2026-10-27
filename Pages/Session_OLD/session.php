@@ -14,10 +14,10 @@ $_SESSION['factum_validation'] = [
     'person' => 'Luis Gimenez',
     'id' =>  '6',
     'tipo' =>  '7',
-    'developer' => 'Factum', //* Tenki Web
+    'developer' => 'Factum', //*  Web
     'content' => 'Factum Consultora',
     'logo' => 'ftm', //* icontrol 
-    'by' => 'by Factum Consultora', //* by Tenkyweb
+    'by' => 'by Factum Consultora', //* by 
     'rutaDeveloper' => 'https://www.factumconsultora.com', //* https://linkedin.com/in/luisergimenez/
 ];
 
@@ -28,10 +28,10 @@ $_SESSION['factum_validation'] = [
 //     'person' => isset($_SESSION['factum_validation']['person']) ? $_SESSION['factum_validation']['person'] : 'Luis Gimenez',
 //     'id' => isset($_SESSION['factum_validation']['id']) ? $_SESSION['factum_validation']['id'] : '6',
 //     'tipo' => isset($_SESSION['factum_validation']['tipo']) ? $_SESSION['factum_validation']['tipo'] : '7',
-//     'developer' => 'Factum', //* Tenki Web
+//     'developer' => 'Factum', //*  Web
 //     'content' => 'Factum Consultora',
 //     'logo' => 'ftm', //* icontrol 
-//     'by' => 'by Factum Consultora', //* by Tenkyweb
+//     'by' => 'by Factum Consultora', //* by 
 //     'rutaDeveloper' => 'https://www.factumconsultora.com', //* https://linkedin.com/in/luisergimenez/
 // ];
 
@@ -39,6 +39,3 @@ $_SESSION['factum_validation'] = [
 
 echo json_encode($_SESSION['factum_validation']);
 exit;
-?>
-
-

@@ -15,10 +15,10 @@
     "ruta": ["Controles/index.php", ""]
   },
   "apps": {
-    "name": ["Performance", "BOS - Reglas de Oro", "SCG", "Admin"],
-    "type": ["btn", "btn", "ctrl", "ctrl"],
-    "ruta": ["", "", "Menu/index.php", "Admin/index.php"],
-    "nivel": [1, 1, 5, 4],
+    "name": ["Performance", "Safety", "BOS - Reglas de Oro", "SCG", "Admin"],
+    "type": ["btn", "btn", "btn", "ctrl", "ctrl"],
+    "ruta": ["", "", "", "Menu/index.php", "Admin/index.php"],
+    "nivel": [1, 1, 1, 5, 4],
     "BOS - Reglas de Oro": {
       "name": ["BOS ACTO SEGURO", "BOS ACTO NO SEGURO", "REGLAS DE ORO"],
       "type": ["btn", "btn", "ctrl"],
@@ -139,6 +139,25 @@
           }
         }
       }
+    },
+    "Safety": {
+      "name": ["INCIDENTES", "Autoinspecciones MAS", "X"],
+      "type": ["ctrl", "btn", "ctrl"],
+      "ruta": [
+        "control_N=xx&control_T=INCIDENTE&nr=0",
+        "",
+        "control_N=xx&control_T=BOS%20SEGURIDAD%20AS&nr=0"
+      ],
+      "nivel": [1, 1, 1]
+    },
+    "Autoinspecciones MAS": {
+      "name": ["Operativas", "Oficinas"],
+      "type": ["ctrl", "btn"],
+      "ruta": [
+        "control_N=xx&control_T=AUTOINSPECCIONES%20MAS%20OPERATIVAS&nr=0",
+        "control_N=xx&control_T=AUTOINSPECCIONES%20MAS%20OFICINAS&nr=0"
+      ],
+      "nivel": [1, 1]
     }
   }
 }

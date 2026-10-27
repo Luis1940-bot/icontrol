@@ -1,0 +1,173 @@
+{
+  "planta": "McCain Laticinios-Brasil",
+  "idiomas": {
+    "bienvenido": ["Bienvenido", "Bem-vindo(Br)", "Welcome"],
+    "abreviatura": ["es", "bra", "en"]
+  },
+  "Menu": {
+    "name": ["Controles", "Consultas"],
+    "type": ["", ""],
+    "ruta": ["Controles/index.php", "Consultas/index.php"]
+  },
+  "Controles": {
+    "name": ["Controles", "Imprimir control"],
+    "type": ["", ""],
+    "ruta": ["Controles/index.php", ""]
+  },
+  "Ad": {
+    "name": ["Reportes", "Controles", "Variables"],
+    "type": ["", "", ""],
+    "ruta": [
+      "ListReportes/index.php",
+      "ListControles/index.php",
+      "ListVariables/index.php"
+    ]
+  },
+  "apps": {
+    "name": ["Performance", "Safety", "BOS - Reglas de Oro", "SCG", "Admin"],
+    "type": ["btn", "btn", "btn", "ctrl", "ctrl"],
+    "ruta": ["", "", "", "Menu/index.php", "Admin/index.php"],
+    "nivel": [1, 1, 1, 3, 4],
+    "Performance": {
+      "name": ["TONELADAS", "ROVE", "DWT"],
+      "type": ["ctrl", "ctrl", "btn"],
+      "ruta": [
+        "control_N=xxx&control_T=TONELADAS%20ESPECIALIDADES&nr=0",
+        "rove/especialidades",
+        ""
+      ],
+      "nivel": [1, 1, 1],
+      "DWT": {
+        "name": ["DWT PLANEADO", "DWT NO PLANEADO"],
+        "type": ["btn", "btn"],
+        "ruta": ["", ""],
+        "nivel": [1, 1],
+        "DWT PLANEADO": {
+          "name": ["DWT CHANGE OVER", "DWT DEFROST", "DWT ESTRATEGIA LR"],
+          "type": ["ctrl", "ctrl", "ctrl"],
+          "ruta": [
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20PLANEADO&nr=0",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20PLANEADO&nr=0",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20PLANEADO&nr=0"
+          ],
+          "nivel": [1, 1, 1]
+        },
+        "DWT NO PLANEADO": {
+          "name": [
+            "DWT PRODUCCIÓN",
+            "DWT MANTENIMIENTO",
+            "DWT AGRO",
+            "DWT CORRELACIÓN RAW vs LÍNEA",
+            "DWT OTROS"
+          ],
+          "type": ["btn", "ctrl", "ctrl", "ctrl", "ctrl"],
+          "ruta": [
+            "",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20MANTENIMIENTO%20MECÁNICO&nr=0",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20AGRO&nr=0",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20CORRELACIÓN %20RAW%20VS%20LÍNEA&nr=0",
+            "control_N=xxx&control_T=DWT%20ESPECIALIDAD%20NO%20PLANIFICADO%20OTROS&nr=0"
+          ],
+          "nivel": [1, 1, 1, 1, 1],
+          "DWT PRODUCCIÓN": {
+            "name": [
+              "DWT FALLA OPERATIVA-LIMPIEZA-MANEJO LR",
+              "DWT PROD CORTE",
+              "DWT PROD COOLER",
+              "DWT PROD BLANCHER",
+              "DWT PROD PROCESO",
+              "DWT PROD TOTEROOM",
+              "DWT PROD GRADING",
+              "DWT PROD EMPAQUE",
+              "DWT PROD PALETIZADO",
+              "DWT PROD COLDSTORE",
+              "DWT PROD DRY RECEIVING",
+              "DWT PROD WET RECEIVING",
+              "DWT PROD WASTE RECEIVING"
+            ],
+            "type": [
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl",
+              "ctrl"
+            ],
+            "ruta": [
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20CORTE&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANIFICADO%20PRODUCCIÓN%20COOLER&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANIFICADO%20PRODUCCIÓN%20BLANCHER&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20PROCESO&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20TOTE%20ROOM&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20GRADING&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20EMPAQUE&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20PALETIZADO&nr=0",
+              "control_N=xxx&control_T=DWT%20NO%20PLANEADO%20PRODUCCIÓN%20COLDSTORE&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20DRY%20RECEIVING&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20WET%20RECEIVING&nr=0",
+              "control_N=xxx&control_T=DWT%20ESPECIALIDADES%20NO%20PLANEADO%20PRODUCCIÓN%20WASTE&nr=0"
+            ],
+            "nivel": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+          }
+        }
+      }
+    },
+    "BOS - Reglas de Oro": {
+      "name": ["BOS ACTO SEGURO", "BOS ACTO NO SEGURO", "REGLAS DE ORO"],
+      "type": ["btn", "btn", "ctrl"],
+      "ruta": ["", "", "control_N=124&control_T=BOS%20REGLAS%20DE%20ORO&nr=0"],
+      "nivel": [1, 1, 1],
+      "BOS ACTO SEGURO": {
+        "name": ["BOS CALIDAD", "BOS MEDIO AMBIENTE", "BOS SEGURIDAD"],
+        "type": ["ctrl", "ctrl", "ctrl"],
+        "ruta": [
+          "control_N=121&control_T=BOS%20CALIDAD%20AS&nr=0",
+          "control_N=123&control_T=BOS%20MEDIO%20AMBIENTE%20AS&nr=0",
+          "control_N=119&control_T=BOS%20SEGURIDAD%20AS&nr=0"
+        ],
+        "nivel": [1, 1, 1]
+      },
+      "BOS ACTO NO SEGURO": {
+        "name": [
+          "BOS CALIDAD ANS",
+          "BOS MEDIO AMBIENTE ANS",
+          "BOS SEGURIDAD ANS"
+        ],
+        "type": ["ctrl", "ctrl", "ctrl"],
+        "ruta": [
+          "control_N=275&control_T=BOS%20CALIDAD%20ANS&nr=0",
+          "control_N=277&control_T=BOS%20MEDIO%20AMBIENTE%20ANS&nr=0",
+          "control_N=276&control_T=BOS%20SEGURIDAD%20ANS&nr=0"
+        ],
+        "nivel": [1, 1, 1]
+      }
+    },
+    "Safety": {
+      "name": ["INCIDENTES", "Autoinspecciones MAS", "X"],
+      "type": ["ctrl", "btn", "ctrl"],
+      "ruta": [
+        "control_N=xxx&control_T=INCIDENTE&nr=0",
+        "",
+        "control_N=xxx&control_T=BOS%20SEGURIDAD%20AS&nr=0"
+      ],
+      "nivel": [1, 1, 1]
+    },
+    "Autoinspecciones MAS": {
+      "name": ["Operativas", "Oficinas"],
+      "type": ["ctrl", "btn"],
+      "ruta": [
+        "control_N=xxx&control_T=AUTOINSPECCIONES%20MAS%20OPERATIVAS&nr=0",
+        "control_N=xxx&control_T=AUTOINSPECCIONES%20MAS%20OFICINAS&nr=0"
+      ],
+      "nivel": [1, 1]
+    }
+  }
+}

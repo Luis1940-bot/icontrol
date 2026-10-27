@@ -2,7 +2,7 @@
 session_start();
 require_once dirname(dirname(__DIR__)) . '/config.php';
 $url = "https://factumconsultora.com/mccain/index.php";
-define('SSO', $_SESSION['login_sso']['sso']);
+define('SSO', $_SESSION['login_sso']['sso'] ?? null);
 
  if (isset($_SESSION['login_sso']['email'] )) {
       $url = "https://factumconsultora.com/mccain/index.php";

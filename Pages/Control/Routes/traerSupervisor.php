@@ -39,7 +39,7 @@ function verifica($q, $sql_i){
 
         }
     
-  } catch (\PDOException $e) {
+  } catch (\Throwable $e) {
             $errorResponse = array('error' => 'Error!: ' . $e->getMessage());
             echo json_encode($errorResponse);
             return $errorResponse;

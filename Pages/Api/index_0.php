@@ -22,6 +22,7 @@ function consultar($call, $desde, $hasta)
             mysqli_select_db($con,$dbname);
 
             $result = mysqli_query($con,$sql);
+            if ($result === false) { error_log('Query fallida: ' . mysqli_error($con)); echo json_encode(array()); mysqli_close($con); exit; }
             $arr_customers = array();
             $arrayResultdo = array();
             $column_names = array();
@@ -39,7 +40,7 @@ function consultar($call, $desde, $hasta)
             echo $json;
             mysqli_close($con);
             // $pdo=null;
-    } catch (\PDOException $e) {
+    } catch (\Throwable $e) {
        print "Error!: ".$e->getMessage()."<br>";
       die();
     }

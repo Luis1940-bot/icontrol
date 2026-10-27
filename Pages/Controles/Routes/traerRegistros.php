@@ -51,6 +51,7 @@
               mysqli_select_db($con,$dbname);
 
               $result = mysqli_query($con,$sql);
+              if ($result === false) { error_log('Query fallida: ' . mysqli_error($con)); echo json_encode(array()); mysqli_close($con); exit; }
               $arr_customers = array();
               $cantidadcampos = mysqli_num_fields($result);
               $contador = 0;
@@ -68,7 +69,7 @@
               mysqli_close($con);
               // $pdo=null;
               
-          } catch (\PDOException $e) {
+          } catch (\Throwable $e) {
               print "Error!: ".$e->getMessage()."<br>";
               die();
           }

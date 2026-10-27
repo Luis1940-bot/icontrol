@@ -3,7 +3,9 @@
     { "name": "McCain Balcarce-Argentina", "num": 1 },
     { "name": "McCain Araxa-Brasil", "num": 2 },
     { "name": "McCain Serya-Brasil", "num": 3 },
-    { "name": "McCain Bogotá-Colombia", "num": 4 }
+    { "name": "McCain Bogotá-Colombia", "num": 4 },
+    { "name": "McCain Forno-Brasil", "num": 5 },
+    { "name": "McCain Laticinios-Brasil", "num": 6 }
   ],
   "company": "Factum-Consultora",
   "developer": "Factum",

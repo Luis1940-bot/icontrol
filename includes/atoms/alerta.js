@@ -626,80 +626,163 @@ const funcionSalir = () => {
   window.history.back()
 }
 
+// const funcionExportarExcel = () => {
+//   try {
+//     const tabla = document.getElementById('tableConsultaViews')
+//     const rows = tabla.getElementsByTagName('tr')
+//     const opcionesValidas = ['FECHA', 'fecha', 'DATE', 'date', 'DATA', 'data']
+
+//     if (rows.length > 1) {
+//       // Obtener los encabezados de la primera fila
+//       const encabezados = Array.from(rows[0].querySelectorAll('td, th')).map(
+//         (th) => th.innerText.trim()
+//       )
+
+//       // Crear un array para almacenar los datos procesados
+//       const datos = []
+
+//       // Agregar encabezados al array de datos
+//       datos.push(encabezados)
+
+//       // Iterar sobre las filas de datos
+//       for (let i = 1; i < rows.length; i++) {
+//         const cells = rows[i].getElementsByTagName('td')
+//         const fila = []
+
+//         // Iterar sobre las celdas de la fila
+//         for (let j = 0; j < cells.length; j++) {
+//           const cell = cells[j]
+//           const campoFecha = encabezados[j] // Encabezado correspondiente
+
+//           if (
+//             opcionesValidas.includes(campoFecha) &&
+//             !isNaN(Date.parse(cell.textContent.trim()))
+//           ) {
+//             // Formatear como fecha
+//             const fecha = new Date(cell.textContent.trim())
+//             const fechaFormateada = fecha
+//               .toLocaleDateString('es-AR', {
+//                 day: '2-digit',
+//                 month: '2-digit',
+//                 year: 'numeric',
+//               })
+//               .replace(/\//g, '-')
+//             fila.push(fechaFormateada) // Agregar como texto
+//           } else {
+//             // Agregar otros valores como están
+//             fila.push(cell.textContent.trim())
+//           }
+//         }
+
+//         datos.push(fila)
+//       }
+
+//       // Crear un libro y una hoja usando XLSX
+//       const ws = XLSX.utils.aoa_to_sheet(datos)
+//       const wb = XLSX.utils.book_new()
+//       XLSX.utils.book_append_sheet(wb, ws, 'Sheet JS')
+
+//       // Escribir el archivo Excel
+//       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+//       const blob = new Blob([wbout], { type: 'application/octet-stream' })
+//       const nameConsulta = document.getElementById('whereUs').textContent.trim()
+//       const fechaDeHoy = fechasGenerator.fecha_larga_ddmmyyyyhhmm(new Date())
+//       const a = document.createElement('a')
+//       const url = URL.createObjectURL(blob)
+//       a.href = url
+//       a.download = `${nameConsulta} ${fechaDeHoy}.xlsx`
+
+//       // Descargar archivo y limpiar
+//       a.click()
+//       URL.revokeObjectURL(url)
+//     } else {
+//       console.warn('La tabla no tiene suficientes filas para procesar.')
+//     }
+//   } catch (error) {
+//     console.error('Error al exportar a Excel:', error)
+//   }
+// }
+
 const funcionExportarExcel = () => {
   try {
     const tabla = document.getElementById('tableConsultaViews')
-    const rows = tabla.getElementsByTagName('tr')
-    const opcionesValidas = ['FECHA', 'fecha', 'DATE', 'date', 'DATA', 'data']
+    if (!tabla) {
+      console.warn('❌ No se encontró la tabla con id tableConsultaViews')
+      return
+    }
 
-    if (rows.length > 1) {
-      // Obtener los encabezados de la primera fila
-      const encabezados = Array.from(rows[0].querySelectorAll('td, th')).map(
-        (th) => th.innerText.trim()
-      )
+    // Recolectar filas
+    const filasHTML = Array.from(tabla.querySelectorAll('tr'))
 
-      // Crear un array para almacenar los datos procesados
-      const datos = []
+    // Construir la data como array de arrays
+    const data = filasHTML.map((filaExcel) => {
+      const celdas = Array.from(filaExcel.querySelectorAll('th, td'))
 
-      // Agregar encabezados al array de datos
-      datos.push(encabezados)
+      return celdas.map((celda) => {
+        const valorOriginal = celda.textContent.trim()
 
-      // Iterar sobre las filas de datos
-      for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td')
-        const fila = []
+        // Detectar valores que Excel puede transformar
+        const pareceFecha = /^\d{1,2}[/-]\d{1,2}[/-]\d{2,4}$/.test(
+          valorOriginal
+        )
+        const esFechaReal = !Number.isNaN(Date.parse(valorOriginal))
+        const esNumeroCorto = /^\d{1,2}$/.test(valorOriginal) // tipo "6"
+        const esTextoValido =
+          Number.isNaN(valorOriginal) || valorOriginal.includes(' ')
 
-        // Iterar sobre las celdas de la fila
-        for (let j = 0; j < cells.length; j++) {
-          const cell = cells[j]
-          const campoFecha = encabezados[j] // Encabezado correspondiente
-
-          if (
-            opcionesValidas.includes(campoFecha) &&
-            !isNaN(Date.parse(cell.textContent.trim()))
-          ) {
-            // Formatear como fecha
-            const fecha = new Date(cell.textContent.trim())
-            const fechaFormateada = fecha
-              .toLocaleDateString('es-AR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-              })
-              .replace(/\//g, '-')
-            fila.push(fechaFormateada) // Agregar como texto
-          } else {
-            // Agregar otros valores como están
-            fila.push(cell.textContent.trim())
-          }
+        // Forzar todo como texto, porque Excel es un gremlin
+        if (pareceFecha || esFechaReal || esNumeroCorto || !esTextoValido) {
+          return { t: 's', v: valorOriginal }
         }
 
-        datos.push(fila)
-      }
+        return { t: 's', v: valorOriginal } // TODO se fuerza como texto, por seguridad
+      })
+    })
 
-      // Crear un libro y una hoja usando XLSX
-      const ws = XLSX.utils.aoa_to_sheet(datos)
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet JS')
+    // Crear hoja y libro
+    const hoja = XLSX.utils.aoa_to_sheet([])
+    data.forEach((filaExcel, r) => {
+      filaExcel.forEach((celda, c) => {
+        const ref = XLSX.utils.encode_cell({ r, c })
+        hoja[ref] = celda
+      })
+    })
+    hoja['!ref'] = XLSX.utils.encode_range({
+      s: { r: 0, c: 0 },
+      e: { r: data.length - 1, c: data[0].length - 1 },
+    })
 
-      // Escribir el archivo Excel
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-      const blob = new Blob([wbout], { type: 'application/octet-stream' })
-      const nameConsulta = document.getElementById('whereUs').textContent.trim()
-      const fechaDeHoy = fechasGenerator.fecha_larga_ddmmyyyyhhmm(new Date())
-      const a = document.createElement('a')
-      const url = URL.createObjectURL(blob)
-      a.href = url
-      a.download = `${nameConsulta} ${fechaDeHoy}.xlsx`
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, hoja, 'Export')
 
-      // Descargar archivo y limpiar
-      a.click()
-      URL.revokeObjectURL(url)
-    } else {
-      console.warn('La tabla no tiene suficientes filas para procesar.')
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+    const blob = new Blob([wbout], { type: 'application/octet-stream' })
+
+    // Obtener nombre y fecha
+    const nameConsulta =
+      document.getElementById('whereUs')?.textContent.trim() || 'Reporte'
+    const fechaDeHoy =
+      window.fechasGenerator?.fecha_larga_ddmmyyyyhhmm?.(new Date()) ||
+      new Date().toISOString()
+
+    // Descargar archivo
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = `${nameConsulta} ${fechaDeHoy}.xlsx`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(a.href)
+
+    // Cerrar modal si existe
+    const menu = document.getElementById('modalAlertM')
+    if (menu) {
+      menu.style.display = 'none'
+      menu.remove()
     }
   } catch (error) {
-    console.error('Error al exportar a Excel:', error)
+    console.error('🧨 Error al exportar a Excel:', error)
+    alert('Algo salió mal al exportar. Revisá la consola.')
   }
 }
 

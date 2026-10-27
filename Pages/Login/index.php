@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('SSO', $_SESSION['login_sso']['sso']);
+define('SSO', $_SESSION['login_sso']['sso'] ?? null);
 if (!SSO) {
   $_SESSION['login_sso']['sso'] = 'null';
 }

@@ -14,7 +14,7 @@ export default function traerRegistros(q, sql_i) {
     }
     const datos = JSON.stringify(obj)
     const ruta = `${SERVER}/Routes/index.php`
-    // console.log(datos)
+    //console.log(datos)
     fetch(ruta, {
       method: 'POST',
       headers: {
@@ -26,7 +26,7 @@ export default function traerRegistros(q, sql_i) {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data)
+        // console.log('RESPUESTA RAW:', data)
 
         let vecesLoad = sessionStorage.getItem('loadSystem')
 

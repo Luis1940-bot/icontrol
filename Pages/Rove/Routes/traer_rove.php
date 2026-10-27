@@ -18,13 +18,13 @@ function consultar($query, $desde, $hasta) {
         include('querys.php');
         $sql = obtenerConsulta($query, $desde, $hasta);
         $data = json_decode($sql, true);
-        $success = $data['success'];
-        if ($success === false) {
+        if (is_array($data) && isset($data['success']) && $data['success'] === false) {
            $response = array('success' => false, 'message' => 'Faltan datos necesarios.');
            echo json_encode($response);
            die();
         }
         $result = mysqli_query($con, $sql);
+        if ($result === false) { error_log('Query fallida: ' . mysqli_error($con)); echo json_encode(array()); mysqli_close($con); exit; }
         $arr_customers = array();
 
         while ($row = mysqli_fetch_assoc($result)) {

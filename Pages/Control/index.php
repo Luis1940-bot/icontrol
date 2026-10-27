@@ -6,7 +6,7 @@ session_start([
     'cookie_secure' => true  // Asegura que la cookie solo se envía sobre HTTPS
 ]);
 $url = "https://factumconsultora.com/mccain/index.php";
-define('SSO', $_SESSION['login_sso']['sso']);
+define('SSO', $_SESSION['login_sso']['sso'] ?? null);
  if (isset($_SESSION['login_sso']['email'] )) {
       define('EMAIL', $_SESSION['login_sso']['email']);
       

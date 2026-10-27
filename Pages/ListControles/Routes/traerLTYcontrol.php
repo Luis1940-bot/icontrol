@@ -34,6 +34,7 @@ function traerControlActualizado($conn) {
 
   try {
       $result = mysqli_query($conn,$sql);
+      if ($result === false) { error_log('Query fallida: ' . mysqli_error($conn)); echo json_encode(array()); return; }
       $arr_customers = array();
       $cantidadcampos = mysqli_num_fields($result);
       $contador = 0;
@@ -51,7 +52,7 @@ function traerControlActualizado($conn) {
       // mysqli_close($conn);
       // $pdo=null;
       
-  } catch (\PDOException $e) {
+  } catch (\Throwable $e) {
       print "Error!: ".$e->getMessage()."<br>";
       die();
   }

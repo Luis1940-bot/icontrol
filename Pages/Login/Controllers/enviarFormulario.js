@@ -12,6 +12,7 @@ export default function enviarLogin(objeto) {
     // const ruta = `${SERVER}/Pages/Login/Routes/login.php?${rax}`
     const ruta = `${SERVER}/Routes/index.php`
     // console.log(ruta)
+
     fetch(ruta, {
       method: 'POST',
       headers: {
