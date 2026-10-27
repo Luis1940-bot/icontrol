@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // window.location.href = `${SERVER}/Pages/Home/`
     // window.location.href = `${SERVER}/Pages/Login/`
     // console.log(`${SERVER}/Pages/Router/rutas.php?ruta=login`)
-    window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=login` //! en localhost va login
-    // window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=home` //! en el hosting va home
+    // window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=login` //! en localhost va login
+    window.location.href = `${SERVER}/Pages/Router/rutas.php?ruta=home` //! en el hosting va home
   }, 1000)
 })

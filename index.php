@@ -14,7 +14,8 @@ if (isset($_SESSION['login_sso']['email'])) {
     $url = "https://factumconsultora.com/scg-mccain/Pages/Login/index.php";
   }
 
-  // header("Location: " . $url . "");
+  header("Location: " . $url . "");
+  exit();
 }
 require_once './config.php';
 
